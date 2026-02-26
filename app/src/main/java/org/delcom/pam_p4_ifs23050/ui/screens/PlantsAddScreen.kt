@@ -1,4 +1,4 @@
-package org.delcom.pam_p4_ifs23050.ui.screens
+package org.delcom.pam_p4_ifs23051.ui.screens
 
 import android.content.Context
 import android.net.Uri
@@ -54,22 +54,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
-import org.delcom.pam_p4_ifs23050.R
-import org.delcom.pam_p4_ifs23050.helper.AlertHelper
-import org.delcom.pam_p4_ifs23050.helper.AlertState
-import org.delcom.pam_p4_ifs23050.helper.AlertType
-import org.delcom.pam_p4_ifs23050.helper.ConstHelper
-import org.delcom.pam_p4_ifs23050.helper.RouteHelper
-import org.delcom.pam_p4_ifs23050.helper.SuspendHelper
-import org.delcom.pam_p4_ifs23050.helper.SuspendHelper.SnackBarType
-import org.delcom.pam_p4_ifs23050.helper.ToolsHelper.toRequestBodyText
-import org.delcom.pam_p4_ifs23050.helper.ToolsHelper.uriToMultipart
-import org.delcom.pam_p4_ifs23050.network.plants.data.ResponsePlantData
-import org.delcom.pam_p4_ifs23050.ui.components.BottomNavComponent
-import org.delcom.pam_p4_ifs23050.ui.components.LoadingUI
-import org.delcom.pam_p4_ifs23050.ui.components.TopAppBarComponent
-import org.delcom.pam_p4_ifs23050.ui.viewmodels.PlantActionUIState
-import org.delcom.pam_p4_ifs23050.ui.viewmodels.PlantViewModel
+import org.delcom.pam_p4_ifs23051.R
+import org.delcom.pam_p4_ifs23051.helper.AlertHelper
+import org.delcom.pam_p4_ifs23051.helper.AlertState
+import org.delcom.pam_p4_ifs23051.helper.AlertType
+import org.delcom.pam_p4_ifs23051.helper.ConstHelper
+import org.delcom.pam_p4_ifs23051.helper.RouteHelper
+import org.delcom.pam_p4_ifs23051.helper.SuspendHelper
+import org.delcom.pam_p4_ifs23051.helper.SuspendHelper.SnackBarType
+import org.delcom.pam_p4_ifs23051.helper.ToolsHelper.toRequestBodyText
+import org.delcom.pam_p4_ifs23051.helper.ToolsHelper.uriToMultipart
+import org.delcom.pam_p4_ifs23051.network.plants.data.ResponsePlantData
+import org.delcom.pam_p4_ifs23051.ui.components.BottomNavComponent
+import org.delcom.pam_p4_ifs23051.ui.components.LoadingUI
+import org.delcom.pam_p4_ifs23051.ui.components.TopAppBarComponent
+import org.delcom.pam_p4_ifs23051.ui.viewmodels.PlantActionUIState
+import org.delcom.pam_p4_ifs23051.ui.viewmodels.PlantViewModel
 
 @Composable
 fun PlantsAddScreen(

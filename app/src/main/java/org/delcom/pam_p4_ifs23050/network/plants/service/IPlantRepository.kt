@@ -1,12 +1,12 @@
-package org.delcom.pam_p4_ifs23050.network.plants.service
+package org.delcom.pam_p4_ifs23051.network.plants.service
 
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import org.delcom.pam_p4_ifs23050.network.data.ResponseMessage
-import org.delcom.pam_p4_ifs23050.network.plants.data.ResponsePlant
-import org.delcom.pam_p4_ifs23050.network.plants.data.ResponsePlantAdd
-import org.delcom.pam_p4_ifs23050.network.plants.data.ResponsePlants
-import org.delcom.pam_p4_ifs23050.network.plants.data.ResponseProfile
+import org.delcom.pam_p4_ifs23051.network.data.ResponseMessage
+import org.delcom.pam_p4_ifs23051.network.plants.data.ResponsePlant
+import org.delcom.pam_p4_ifs23051.network.plants.data.ResponsePlantAdd
+import org.delcom.pam_p4_ifs23051.network.plants.data.ResponsePlants
+import org.delcom.pam_p4_ifs23051.network.plants.data.ResponseProfile
 
 interface IPlantRepository {
     // Ambil profile developer

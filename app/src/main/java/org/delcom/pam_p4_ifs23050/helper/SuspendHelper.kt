@@ -1,4 +1,4 @@
-package org.delcom.pam_p4_ifs23050.helper
+package org.delcom.pam_p4_ifs23051.helper
 
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
@@ -6,7 +6,7 @@ import com.google.gson.Gson
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.delcom.pam_p4_ifs23050.network.data.ResponseMessage
+import org.delcom.pam_p4_ifs23051.network.data.ResponseMessage
 import retrofit2.HttpException
 
 object SuspendHelper {

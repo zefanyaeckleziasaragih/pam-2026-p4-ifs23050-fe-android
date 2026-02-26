@@ -1,217 +1,170 @@
-package org.delcom.pam_p4_ifs23050.ui.components
+package org.delcom.pam_p4_ifs23051.ui.components
 
 import android.content.res.Configuration
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Nature
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Nature
-import androidx.compose.material.icons.outlined.Person
-import androidx.compose.material3.Badge
-import androidx.compose.material3.BadgedBox
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemDefaults
-import androidx.compose.material3.Surface
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import org.delcom.pam_p4_ifs23050.helper.ConstHelper
-import org.delcom.pam_p4_ifs23050.helper.RouteHelper
-import org.delcom.pam_p4_ifs23050.ui.theme.DelcomTheme
+import org.delcom.pam_p4_ifs23051.helper.ConstHelper
+import org.delcom.pam_p4_ifs23051.helper.RouteHelper
+import org.delcom.pam_p4_ifs23051.ui.theme.DelcomTheme
 
 sealed class MenuBottomNav(
-    val route: String,
-    val title: String,
-    val icon: ImageVector,
-    val iconActive: ImageVector,
+    val route      : String,
+    val title      : String,
+    val icon       : ImageVector,
+    val iconActive : ImageVector,
 ) {
-    object Home : MenuBottomNav(ConstHelper.RouteNames.Home.path, "Home", Icons.Outlined.Home, Icons.Filled.Home)
-    object Plants : MenuBottomNav(ConstHelper.RouteNames.Plants.path, "Plants", Icons.Outlined.Nature, Icons.Filled.Nature)
-    object Profile : MenuBottomNav(ConstHelper.RouteNames.Profile.path, "Profile", Icons.Outlined.Person, Icons.Filled.Person)
+    object Home : MenuBottomNav(
+        ConstHelper.RouteNames.Home.path,
+        "Beranda",
+        Icons.Outlined.Home,
+        Icons.Filled.Home,
+    )
+    object Plants : MenuBottomNav(
+        ConstHelper.RouteNames.Plants.path,
+        "Tanaman",
+        Icons.Outlined.Nature,
+        Icons.Filled.Nature,
+    )
+    object FlowerLanguage : MenuBottomNav(
+        ConstHelper.RouteNames.FlowerLanguage.path,
+        "Bunga",
+        Icons.Outlined.LocalFlorist,
+        Icons.Filled.LocalFlorist,
+    )
+    object Profile : MenuBottomNav(
+        ConstHelper.RouteNames.Profile.path,
+        "Profil",
+        Icons.Outlined.Person,
+        Icons.Filled.Person,
+    )
 }
 
 @Composable
 fun BottomNavComponent(navController: NavHostController) {
-    val items: List<MenuBottomNav> = listOf(
+    val items = listOf(
         MenuBottomNav.Home,
         MenuBottomNav.Plants,
+        MenuBottomNav.FlowerLanguage,
         MenuBottomNav.Profile,
     )
-
     val currentRoute = navController.currentDestination?.route
 
     Surface(
         modifier = Modifier
             .fillMaxWidth()
             .shadow(
-                elevation = 8.dp,
-                shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp),
-                spotColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
+                elevation  = 8.dp,
+                shape      = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp),
+                spotColor  = MaterialTheme.colorScheme.primary.copy(alpha = 0.25f),
             ),
-        shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp),
+        shape          = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp),
         tonalElevation = 2.dp,
-        color = MaterialTheme.colorScheme.surface
+        color          = MaterialTheme.colorScheme.surface,
     ) {
-        NavigationBar(
-            containerColor = MaterialTheme.colorScheme.surface,
-            modifier = Modifier.height(120.dp),
-            tonalElevation = 0.dp
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(72.dp)
+                .padding(horizontal = 8.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            items.forEachIndexed { _, screen ->
-                val selected = currentRoute?.contains(screen.route) == true
-                val animatedHeight by animateDpAsState(
-                    targetValue = if (selected) 56.dp else 48.dp,
-                    label = "navigationHeight"
+            items.forEach { screen ->
+                val selected = currentRoute?.startsWith(screen.route) == true
+                val iconSize by animateDpAsState(
+                    targetValue = if (selected) 26.dp else 22.dp,
+                    label       = "iconSize",
                 )
 
-                NavigationBarItem(
-                    selected = selected,
-                    onClick = {
-                        RouteHelper.to(navController, screen.route, true)
-                    },
-                    icon = {
+                // Custom nav item agar tidak kepotong
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxHeight()
+                        .clip(RoundedCornerShape(12.dp))
+                        .then(
+                            if (selected)
+                                Modifier.background(
+                                    MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.35f)
+                                )
+                            else Modifier
+                        ),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    // Bungkus seluruh item dalam satu clickable
+                    Surface(
+                        onClick = { RouteHelper.to(navController, screen.route, true) },
+                        color = androidx.compose.ui.graphics.Color.Transparent,
+                        modifier = Modifier.fillMaxSize(),
+                    ) {
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.spacedBy(4.dp)
+                            verticalArrangement = Arrangement.Center,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(vertical = 8.dp),
                         ) {
-                            // Icon dengan efek khusus
-                            NavigationIcon(
-                                selected = selected,
-                                screen = screen,
-                                hasNotification = false
+                            Icon(
+                                imageVector        = if (selected) screen.iconActive else screen.icon,
+                                contentDescription = screen.title,
+                                modifier           = Modifier.size(iconSize),
+                                tint               = if (selected)
+                                    MaterialTheme.colorScheme.primary
+                                else
+                                    MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(
+                                text      = screen.title,
+                                style     = MaterialTheme.typography.labelSmall.copy(
+                                    fontSize = 10.sp,
+                                ),
+                                color     = if (selected)
+                                    MaterialTheme.colorScheme.primary
+                                else
+                                    MaterialTheme.colorScheme.onSurfaceVariant,
+                                textAlign = TextAlign.Center,
+                                maxLines  = 1,
                             )
                         }
-                    },
-                    modifier = Modifier
-                        .height(animatedHeight)
-                        .padding(vertical = if (selected) 0.dp else 4.dp),
-                    alwaysShowLabel = true,
-                    colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = MaterialTheme.colorScheme.primary,
-                        selectedTextColor = MaterialTheme.colorScheme.primary,
-                        unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                        unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                        indicatorColor = Color.Transparent // Remove default indicator
-                    )
-                )
-            }
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun NavigationIcon(
-    selected: Boolean,
-    screen: MenuBottomNav,
-    hasNotification: Boolean = false
-) {
-    Box(
-        modifier = Modifier.size(48.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        // Background untuk icon yang aktif
-        if (selected) {
-            Box(
-                modifier = Modifier
-                    .matchParentSize()
-                    .clip(RoundedCornerShape(15.dp))
-                    .background(
-                        MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.2f)
-                    )
-                    .border(
-                        width = 1.dp,
-                        color = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
-                        shape = CircleShape
-                    )
-            )
-        }
-
-        // Icon dengan badge jika ada notifikasi
-        BadgedBox(
-            badge = {
-                if (hasNotification && !selected) {
-                    Badge(
-                        modifier = Modifier
-                            .size(8.dp)
-                            .offset(x = 6.dp, y = (-6).dp),
-                        containerColor = MaterialTheme.colorScheme.error
-                    )
+                    }
                 }
             }
-        ) {
-            Icon(
-                imageVector = if (selected) screen.iconActive else screen.icon,
-                contentDescription = screen.title,
-                modifier = Modifier.size(24.dp),
-                tint = if (selected) MaterialTheme.colorScheme.primary
-                else MaterialTheme.colorScheme.onSurfaceVariant
-            )
         }
     }
 }
 
-@Preview(showBackground = true, name = "Default")
+@Preview(showBackground = true)
 @Composable
 fun PreviewBottomNavComponent() {
     DelcomTheme {
-        Surface(
-            modifier = Modifier.fillMaxWidth(),
-            color = MaterialTheme.colorScheme.background
-        ) {
-            Column(
-                modifier = Modifier
-            ) {
-                BottomNavComponent(
-                    navController = NavHostController(LocalContext.current)
-                )
-            }
-        }
+        BottomNavComponent(navController = NavHostController(LocalContext.current))
     }
 }
 
-@Preview(showBackground = true, name = "Dark Mode", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun PreviewBottomNavComponentDark() {
+fun PreviewBottomNavDark() {
     DelcomTheme(darkTheme = true) {
-        Surface(
-            modifier = Modifier.fillMaxWidth(),
-            color = MaterialTheme.colorScheme.background
-        ) {
-            Column(
-                modifier = Modifier
-            ) {
-                BottomNavComponent(
-                    navController = NavHostController(LocalContext.current)
-                )
-            }
-        }
+        BottomNavComponent(navController = NavHostController(LocalContext.current))
     }
 }

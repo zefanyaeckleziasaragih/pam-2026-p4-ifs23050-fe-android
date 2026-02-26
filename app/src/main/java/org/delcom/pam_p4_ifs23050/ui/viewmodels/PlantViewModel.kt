@@ -1,4 +1,4 @@
-package org.delcom.pam_p4_ifs23050.ui.viewmodels
+package org.delcom.pam_p4_ifs23051.ui.viewmodels
 
 import androidx.annotation.Keep
 import androidx.lifecycle.ViewModel
@@ -10,9 +10,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import org.delcom.pam_p4_ifs23050.network.plants.data.ResponsePlantData
-import org.delcom.pam_p4_ifs23050.network.plants.data.ResponseProfile
-import org.delcom.pam_p4_ifs23050.network.plants.service.IPlantRepository
+import org.delcom.pam_p4_ifs23051.network.plants.data.ResponsePlantData
+import org.delcom.pam_p4_ifs23051.network.plants.data.ResponseProfile
+import org.delcom.pam_p4_ifs23051.network.plants.service.IPlantRepository
 import javax.inject.Inject
 
 sealed interface ProfileUIState {

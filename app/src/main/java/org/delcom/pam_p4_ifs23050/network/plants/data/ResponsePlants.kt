@@ -1,4 +1,4 @@
-package org.delcom.pam_p4_ifs23050.network.plants.data
+package org.delcom.pam_p4_ifs23051.network.plants.data
 
 import kotlinx.serialization.Serializable
 

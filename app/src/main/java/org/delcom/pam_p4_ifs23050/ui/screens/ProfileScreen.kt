@@ -1,4 +1,4 @@
-package org.delcom.pam_p4_ifs23050.ui.screens
+package org.delcom.pam_p4_ifs23051.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -37,16 +37,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
-import org.delcom.pam_p4_ifs23050.R
-import org.delcom.pam_p4_ifs23050.helper.RouteHelper
-import org.delcom.pam_p4_ifs23050.helper.ToolsHelper
-import org.delcom.pam_p4_ifs23050.network.plants.data.ResponseProfile
-import org.delcom.pam_p4_ifs23050.ui.components.BottomNavComponent
-import org.delcom.pam_p4_ifs23050.ui.components.LoadingUI
-import org.delcom.pam_p4_ifs23050.ui.components.TopAppBarComponent
-import org.delcom.pam_p4_ifs23050.ui.theme.DelcomTheme
-import org.delcom.pam_p4_ifs23050.ui.viewmodels.PlantViewModel
-import org.delcom.pam_p4_ifs23050.ui.viewmodels.ProfileUIState
+import org.delcom.pam_p4_ifs23051.R
+import org.delcom.pam_p4_ifs23051.helper.RouteHelper
+import org.delcom.pam_p4_ifs23051.helper.ToolsHelper
+import org.delcom.pam_p4_ifs23051.network.plants.data.ResponseProfile
+import org.delcom.pam_p4_ifs23051.ui.components.BottomNavComponent
+import org.delcom.pam_p4_ifs23051.ui.components.LoadingUI
+import org.delcom.pam_p4_ifs23051.ui.components.TopAppBarComponent
+import org.delcom.pam_p4_ifs23051.ui.theme.DelcomTheme
+import org.delcom.pam_p4_ifs23051.ui.viewmodels.PlantViewModel
+import org.delcom.pam_p4_ifs23051.ui.viewmodels.ProfileUIState
 
 @Composable
 fun ProfileScreen(
@@ -185,8 +185,8 @@ fun PreviewProfileUI(){
     DelcomTheme {
         ProfileUI(
             profile = ResponseProfile(
-                nama = "Abdullah Ubaid",
-                username = "ifs23050",
+                nama = "Yuri Pakpahan",
+                username = "ifs23051",
                 tentang = ""
             )
         )

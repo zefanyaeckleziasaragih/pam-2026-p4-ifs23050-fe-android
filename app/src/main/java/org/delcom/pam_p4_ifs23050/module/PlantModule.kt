@@ -1,13 +1,13 @@
-package org.delcom.pam_p4_ifs23050.module
+package org.delcom.pam_p4_ifs23051.module
 
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import org.delcom.pam_p4_ifs23050.network.plants.service.IPlantAppContainer
-import org.delcom.pam_p4_ifs23050.network.plants.service.IPlantRepository
-import org.delcom.pam_p4_ifs23050.network.plants.service.PlantAppContainer
-import org.delcom.pam_p4_ifs23050.network.plants.service.PlantRepository
+import org.delcom.pam_p4_ifs23051.network.plants.service.IPlantAppContainer
+import org.delcom.pam_p4_ifs23051.network.plants.service.IPlantRepository
+import org.delcom.pam_p4_ifs23051.network.plants.service.PlantAppContainer
+import org.delcom.pam_p4_ifs23051.network.plants.service.PlantRepository
 
 @Module
 @InstallIn(SingletonComponent::class)
