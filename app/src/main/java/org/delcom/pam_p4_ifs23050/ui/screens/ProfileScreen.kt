@@ -1,4 +1,4 @@
-package org.delcom.pam_p4_ifs23051.ui.screens
+package org.delcom.pam_p4_ifs23050.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -37,23 +37,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
-import org.delcom.pam_p4_ifs23051.R
-import org.delcom.pam_p4_ifs23051.helper.RouteHelper
-import org.delcom.pam_p4_ifs23051.helper.ToolsHelper
-import org.delcom.pam_p4_ifs23051.network.plants.data.ResponseProfile
-import org.delcom.pam_p4_ifs23051.ui.components.BottomNavComponent
-import org.delcom.pam_p4_ifs23051.ui.components.LoadingUI
-import org.delcom.pam_p4_ifs23051.ui.components.TopAppBarComponent
-import org.delcom.pam_p4_ifs23051.ui.theme.DelcomTheme
-import org.delcom.pam_p4_ifs23051.ui.viewmodels.PlantViewModel
-import org.delcom.pam_p4_ifs23051.ui.viewmodels.ProfileUIState
+import org.delcom.pam_p4_ifs23050.R
+import org.delcom.pam_p4_ifs23050.helper.RouteHelper
+import org.delcom.pam_p4_ifs23050.helper.ToolsHelper
+import org.delcom.pam_p4_ifs23050.network.plants.data.ResponseProfile
+import org.delcom.pam_p4_ifs23050.ui.components.BottomNavComponent
+import org.delcom.pam_p4_ifs23050.ui.components.LoadingUI
+import org.delcom.pam_p4_ifs23050.ui.components.TopAppBarComponent
+import org.delcom.pam_p4_ifs23050.ui.theme.DelcomTheme
+import org.delcom.pam_p4_ifs23050.ui.viewmodels.PlantViewModel
+import org.delcom.pam_p4_ifs23050.ui.viewmodels.ProfileUIState
 
 @Composable
 fun ProfileScreen(
     navController: NavHostController,
     plantViewModel: PlantViewModel
 ) {
-    // Ambil data dari viewmodel
     val uiStatePlant by plantViewModel.uiState.collectAsState()
 
     var isLoading by remember { mutableStateOf(false) }
@@ -65,18 +64,17 @@ fun ProfileScreen(
     }
 
     LaunchedEffect(uiStatePlant.profile) {
-        if(uiStatePlant.profile !is ProfileUIState.Loading){
+        if (uiStatePlant.profile !is ProfileUIState.Loading) {
             isLoading = false
-            if(uiStatePlant.profile is ProfileUIState.Success){
+            if (uiStatePlant.profile is ProfileUIState.Success) {
                 profile = (uiStatePlant.profile as ProfileUIState.Success).data
-            }else{
+            } else {
                 RouteHelper.back(navController)
             }
         }
     }
 
-    // Tampilkan halaman loading
-    if(isLoading || profile == null){
+    if (isLoading || profile == null) {
         LoadingUI()
         return
     }
@@ -86,18 +84,12 @@ fun ProfileScreen(
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.background)
     ) {
-        // Top App Bar
-        TopAppBarComponent(navController = navController, title = "Profile", false)
-        // Content
+        TopAppBarComponent(navController = navController, title = "Profil", false)
         Box(
-            modifier = Modifier
-                .weight(1f)
+            modifier = Modifier.weight(1f)
         ) {
-            ProfileUI(
-                profile = profile!!
-            )
+            ProfileUI(profile = profile!!)
         }
-        // Bottom Nav
         BottomNavComponent(navController = navController)
     }
 }
@@ -105,7 +97,7 @@ fun ProfileScreen(
 @Composable
 fun ProfileUI(
     profile: ResponseProfile
-){
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -119,19 +111,18 @@ fun ProfileUI(
                 .padding(top = 32.dp, bottom = 16.dp),
             contentAlignment = Alignment.Center
         ) {
-
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
                 // Foto Profil
                 AsyncImage(
                     model = ToolsHelper.getProfilePhotoUrl(),
-                    contentDescription = "Photo Profil",
+                    contentDescription = "Foto Profil",
                     placeholder = painterResource(R.drawable.img_placeholder),
                     error = painterResource(R.drawable.img_placeholder),
                     modifier = Modifier
                         .size(110.dp)
                         .clip(CircleShape)
-                        .border(3.dp, Color.White, CircleShape)
+                        .border(3.dp, MaterialTheme.colorScheme.primary, CircleShape)
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -139,7 +130,8 @@ fun ProfileUI(
                 Text(
                     text = profile.nama,
                     fontSize = 22.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onBackground
                 )
 
                 Text(
@@ -165,12 +157,14 @@ fun ProfileUI(
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    color = MaterialTheme.colorScheme.primary
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     profile.tentang,
-                    fontSize = 15.sp
+                    fontSize = 15.sp,
+                    color = MaterialTheme.colorScheme.onSurface
                 )
             }
         }
@@ -181,13 +175,13 @@ fun ProfileUI(
 
 @Preview(showBackground = true, name = "Light Mode")
 @Composable
-fun PreviewProfileUI(){
+fun PreviewProfileUI() {
     DelcomTheme {
         ProfileUI(
             profile = ResponseProfile(
-                nama = "Yuri Pakpahan",
-                username = "ifs23051",
-                tentang = ""
+                nama = "Zefanya Ecklezia Saragih",
+                username = "ifs23050",
+                tentang = "Saya adalah seorang developer yang tertarik pada mobile development, backend API, dan berbagai teknologi pengembangan aplikasi."
             )
         )
     }

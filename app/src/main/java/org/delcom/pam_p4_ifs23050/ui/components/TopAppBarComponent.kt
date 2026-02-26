@@ -1,4 +1,4 @@
-package org.delcom.pam_p4_ifs23051.ui.components
+package org.delcom.pam_p4_ifs23050.ui.components
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
@@ -60,9 +60,9 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import org.delcom.pam_p4_ifs23051.helper.ConstHelper
-import org.delcom.pam_p4_ifs23051.helper.RouteHelper
-import org.delcom.pam_p4_ifs23051.ui.theme.DelcomTheme
+import org.delcom.pam_p4_ifs23050.helper.ConstHelper
+import org.delcom.pam_p4_ifs23050.helper.RouteHelper
+import org.delcom.pam_p4_ifs23050.ui.theme.DelcomTheme
 
 data class TopAppBarMenuItem(
     val text: String,

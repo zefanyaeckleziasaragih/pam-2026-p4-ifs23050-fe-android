@@ -1,4 +1,4 @@
-package org.delcom.pam_p4_ifs23051.ui.theme
+package org.delcom.pam_p4_ifs23050.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

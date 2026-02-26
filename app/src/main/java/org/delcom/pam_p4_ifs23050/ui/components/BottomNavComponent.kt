@@ -1,4 +1,4 @@
-package org.delcom.pam_p4_ifs23051.ui.components
+package org.delcom.pam_p4_ifs23050.ui.components
 
 import android.content.res.Configuration
 import androidx.compose.animation.core.animateDpAsState
@@ -22,9 +22,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import org.delcom.pam_p4_ifs23051.helper.ConstHelper
-import org.delcom.pam_p4_ifs23051.helper.RouteHelper
-import org.delcom.pam_p4_ifs23051.ui.theme.DelcomTheme
+import org.delcom.pam_p4_ifs23050.helper.ConstHelper
+import org.delcom.pam_p4_ifs23050.helper.RouteHelper
+import org.delcom.pam_p4_ifs23050.ui.theme.DelcomTheme
 
 sealed class MenuBottomNav(
     val route      : String,
@@ -44,11 +44,11 @@ sealed class MenuBottomNav(
         Icons.Outlined.Nature,
         Icons.Filled.Nature,
     )
-    object FlowerLanguage : MenuBottomNav(
-        ConstHelper.RouteNames.FlowerLanguage.path,
-        "Bunga",
-        Icons.Outlined.LocalFlorist,
-        Icons.Filled.LocalFlorist,
+    object Zodiac : MenuBottomNav(
+        ConstHelper.RouteNames.Zodiac.path,
+        "Zodiak",
+        Icons.Outlined.AutoAwesome,
+        Icons.Filled.AutoAwesome,
     )
     object Profile : MenuBottomNav(
         ConstHelper.RouteNames.Profile.path,
@@ -63,7 +63,7 @@ fun BottomNavComponent(navController: NavHostController) {
     val items = listOf(
         MenuBottomNav.Home,
         MenuBottomNav.Plants,
-        MenuBottomNav.FlowerLanguage,
+        MenuBottomNav.Zodiac,
         MenuBottomNav.Profile,
     )
     val currentRoute = navController.currentDestination?.route
@@ -95,7 +95,6 @@ fun BottomNavComponent(navController: NavHostController) {
                     label       = "iconSize",
                 )
 
-                // Custom nav item agar tidak kepotong
                 Box(
                     modifier = Modifier
                         .weight(1f)
@@ -110,7 +109,6 @@ fun BottomNavComponent(navController: NavHostController) {
                         ),
                     contentAlignment = Alignment.Center,
                 ) {
-                    // Bungkus seluruh item dalam satu clickable
                     Surface(
                         onClick = { RouteHelper.to(navController, screen.route, true) },
                         color = androidx.compose.ui.graphics.Color.Transparent,

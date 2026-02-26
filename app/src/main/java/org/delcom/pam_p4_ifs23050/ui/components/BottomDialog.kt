@@ -1,4 +1,4 @@
-package org.delcom.pam_p4_ifs23051.ui.components
+package org.delcom.pam_p4_ifs23050.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

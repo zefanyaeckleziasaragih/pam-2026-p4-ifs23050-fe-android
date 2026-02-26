@@ -1,4 +1,4 @@
-package org.delcom.pam_p4_ifs23051
+package org.delcom.pam_p4_ifs23050
 
 import android.app.Application
 import coil.Coil
@@ -7,7 +7,7 @@ import coil.disk.DiskCache
 import coil.memory.MemoryCache
 import dagger.hilt.android.HiltAndroidApp
 import okhttp3.OkHttpClient
-import org.delcom.pam_p4_ifs23051.helper.UnsafeOkHttpClient
+import org.delcom.pam_p4_ifs23050.helper.UnsafeOkHttpClient
 import java.util.concurrent.TimeUnit
 
 @HiltAndroidApp
@@ -24,7 +24,6 @@ class App : Application() {
      * dari server dengan self-signed certificate.
      */
     private fun setupCoil() {
-        // Buat OkHttpClient khusus Coil (tanpa logging body agar lebih cepat)
         val coilHttpClient = OkHttpClient.Builder()
             .sslSocketFactory(
                 UnsafeOkHttpClient.sslContext.socketFactory,
@@ -37,20 +36,18 @@ class App : Application() {
 
         val imageLoader = ImageLoader.Builder(this)
             .okHttpClient(coilHttpClient)
-            // Memory cache: simpan gambar di RAM agar tidak fetch ulang
             .memoryCache {
                 MemoryCache.Builder(this)
-                    .maxSizePercent(0.25) // 25% dari memory app
+                    .maxSizePercent(0.25)
                     .build()
             }
-            // Disk cache: simpan gambar di storage agar tidak download ulang
             .diskCache {
                 DiskCache.Builder()
                     .directory(cacheDir.resolve("image_cache"))
-                    .maxSizeBytes(50L * 1024 * 1024) // 50 MB
+                    .maxSizeBytes(50L * 1024 * 1024)
                     .build()
             }
-            .crossfade(true) // animasi fade saat gambar muncul
+            .crossfade(true)
             .build()
 
         Coil.setImageLoader(imageLoader)

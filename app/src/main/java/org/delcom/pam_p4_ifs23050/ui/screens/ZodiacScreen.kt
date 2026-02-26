@@ -1,4 +1,4 @@
-package org.delcom.pam_p4_ifs23051.ui.screens
+package org.delcom.pam_p4_ifs23050.ui.screens
 
 import android.content.Context
 import android.net.Uri
@@ -40,44 +40,44 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import okhttp3.MultipartBody
-import org.delcom.pam_p4_ifs23051.R
-import org.delcom.pam_p4_ifs23051.helper.ConstHelper
-import org.delcom.pam_p4_ifs23051.helper.RouteHelper
-import org.delcom.pam_p4_ifs23051.helper.SuspendHelper
-import org.delcom.pam_p4_ifs23051.helper.ToolsHelper.toRequestBodyText
-import org.delcom.pam_p4_ifs23051.helper.ToolsHelper.uriToMultipart
-import org.delcom.pam_p4_ifs23051.helper.ToolsHelper.getFlowerImageUrl
-import org.delcom.pam_p4_ifs23051.network.flower.data.ResponseFlowerLanguageData
-import org.delcom.pam_p4_ifs23051.ui.components.*
-import org.delcom.pam_p4_ifs23051.ui.theme.DelcomTheme
-import org.delcom.pam_p4_ifs23051.ui.viewmodels.*
+import org.delcom.pam_p4_ifs23050.R
+import org.delcom.pam_p4_ifs23050.helper.ConstHelper
+import org.delcom.pam_p4_ifs23050.helper.RouteHelper
+import org.delcom.pam_p4_ifs23050.helper.SuspendHelper
+import org.delcom.pam_p4_ifs23050.helper.ToolsHelper.toRequestBodyText
+import org.delcom.pam_p4_ifs23050.helper.ToolsHelper.uriToMultipart
+import org.delcom.pam_p4_ifs23050.helper.ToolsHelper.getZodiacImageUrl
+import org.delcom.pam_p4_ifs23050.network.zodiac.data.ResponseZodiacData
+import org.delcom.pam_p4_ifs23050.ui.components.*
+import org.delcom.pam_p4_ifs23050.ui.theme.DelcomTheme
+import org.delcom.pam_p4_ifs23050.ui.viewmodels.*
 
 // ═════════════════════════════════════════════════════════════════════════════
 // LIST SCREEN
 // ═════════════════════════════════════════════════════════════════════════════
 @Composable
-fun FlowerLanguageScreen(
+fun ZodiacScreen(
     navController        : NavHostController,
     snackbarHost         : SnackbarHostState,
-    flowerLanguageViewModel : FlowerLanguageViewModel,
+    zodiacViewModel : ZodiacViewModel,
 ) {
-    val uiState by flowerLanguageViewModel.uiState.collectAsState()
+    val uiState by zodiacViewModel.uiState.collectAsState()
     var isLoading  by remember { mutableStateOf(false) }
-    var flowers    by remember { mutableStateOf<List<ResponseFlowerLanguageData>>(emptyList()) }
+    var zodiacs    by remember { mutableStateOf<List<ResponseZodiacData>>(emptyList()) }
     var searchQuery by remember { mutableStateOf(TextFieldValue("")) }
 
-    fun fetchFlowers() {
+    fun fetchZodiacs() {
         isLoading = true
-        flowerLanguageViewModel.getAllFlowers(searchQuery.text.ifBlank { null })
+        zodiacViewModel.getAllZodiacs(searchQuery.text.ifBlank { null })
     }
 
-    LaunchedEffect(Unit) { fetchFlowers() }
+    LaunchedEffect(Unit) { fetchZodiacs() }
 
-    LaunchedEffect(uiState.flowers) {
-        if (uiState.flowers !is FlowersUIState.Loading) {
+    LaunchedEffect(uiState.zodiacs) {
+        if (uiState.zodiacs !is ZodiacsUIState.Loading) {
             isLoading = false
-            flowers = if (uiState.flowers is FlowersUIState.Success)
-                (uiState.flowers as FlowersUIState.Success).data
+            zodiacs = if (uiState.zodiacs is ZodiacsUIState.Success)
+                (uiState.zodiacs as ZodiacsUIState.Success).data
             else emptyList()
         }
     }
@@ -91,27 +91,27 @@ fun FlowerLanguageScreen(
     ) {
         TopAppBarComponent(
             navController       = navController,
-            title               = "Bahasa Bunga",
+            title               = "Rasi Bintang",
             showBackButton      = false,
             withSearch          = true,
             searchQuery         = searchQuery,
             onSearchQueryChange = { searchQuery = it },
-            onSearchAction      = { fetchFlowers() },
+            onSearchAction      = { fetchZodiacs() },
         )
 
         Box(modifier = Modifier.weight(1f)) {
-            FlowerLanguageListUI(flowers = flowers) { id ->
-                RouteHelper.to(navController, "flower-language/$id")
+            ZodiacListUI(zodiacs = zodiacs) { id ->
+                RouteHelper.to(navController, "zodiac/$id")
             }
             FloatingActionButton(
-                onClick = { RouteHelper.to(navController, ConstHelper.RouteNames.FlowerLanguageAdd.path) },
+                onClick = { RouteHelper.to(navController, ConstHelper.RouteNames.ZodiacAdd.path) },
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
                     .padding(16.dp),
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor   = MaterialTheme.colorScheme.onPrimary,
             ) {
-                Icon(Icons.Default.Add, contentDescription = "Tambah Bahasa Bunga")
+                Icon(Icons.Default.Add, contentDescription = "Tambah Zodiak")
             }
         }
 
@@ -120,17 +120,17 @@ fun FlowerLanguageScreen(
 }
 
 @Composable
-fun FlowerLanguageListUI(
-    flowers : List<ResponseFlowerLanguageData>,
+fun ZodiacListUI(
+    zodiacs : List<ResponseZodiacData>,
     onOpen  : (String) -> Unit,
 ) {
-    if (flowers.isEmpty()) {
+    if (zodiacs.isEmpty()) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text("🌸", fontSize = 72.sp)
+                Text("✨", fontSize = 72.sp)
                 Spacer(Modifier.height(16.dp))
                 Text(
-                    "Belum ada data bahasa bunga",
+                    "Belum ada data rasi bintang",
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -150,38 +150,42 @@ fun FlowerLanguageListUI(
         contentPadding      = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        items(flowers) { flower ->
-            FlowerLanguageItemCard(flower = flower, onOpen = onOpen)
+        items(zodiacs) { zodiac ->
+            ZodiacItemCard(zodiac = zodiac, onOpen = onOpen)
         }
         item { Spacer(Modifier.height(72.dp)) }
     }
 }
 
 @Composable
-fun FlowerLanguageItemCard(
-    flower : ResponseFlowerLanguageData,
+fun ZodiacItemCard(
+    zodiac : ResponseZodiacData,
     onOpen : (String) -> Unit,
 ) {
     Card(
         modifier  = Modifier
             .fillMaxWidth()
-            .clickable { onOpen(flower.id) },
+            .clickable { onOpen(zodiac.id) },
         shape     = RoundedCornerShape(18.dp),
         colors    = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(4.dp),
     ) {
         Row(modifier = Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
-            // Gambar bunga
+            // Gambar zodiak
             Box(
                 modifier = Modifier
                     .size(72.dp)
                     .clip(RoundedCornerShape(14.dp))
-                    .background(MaterialTheme.colorScheme.primaryContainer),
+                    .background(
+                        Brush.linearGradient(
+                            colors = listOf(Color(0xFF1A0050), Color(0xFF0A1A4E))
+                        )
+                    ),
                 contentAlignment = Alignment.Center,
             ) {
                 AsyncImage(
-                    model              = getFlowerImageUrl(flower.id),
-                    contentDescription = flower.namaUmum,
+                    model              = getZodiacImageUrl(zodiac.id),
+                    contentDescription = zodiac.namaUmum,
                     placeholder        = painterResource(R.drawable.img_placeholder),
                     error              = painterResource(R.drawable.img_placeholder),
                     contentScale       = ContentScale.Crop,
@@ -193,18 +197,18 @@ fun FlowerLanguageItemCard(
 
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text  = flower.namaUmum,
+                    text  = zodiac.namaUmum,
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
                 )
                 Text(
-                    text  = flower.namaLatin,
+                    text  = zodiac.namaLatin,
                     style = MaterialTheme.typography.bodySmall.copy(
                         fontStyle = FontStyle.Italic,
                         color     = MaterialTheme.colorScheme.onSurfaceVariant,
                     ),
                 )
                 Spacer(Modifier.height(6.dp))
-                // Makna chip
+                // Makna chip (label "Elemen")
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(20.dp))
@@ -216,13 +220,14 @@ fun FlowerLanguageItemCard(
                         horizontalArrangement = Arrangement.spacedBy(4.dp),
                     ) {
                         Icon(
-                            imageVector    = Icons.Default.LocalFlorist,
+                            imageVector    = Icons.Default.AutoAwesome,
                             contentDescription = null,
                             modifier       = Modifier.size(12.dp),
                             tint           = MaterialTheme.colorScheme.primary,
                         )
                         Text(
-                            text  = flower.makna,
+                            // makna dipakai sebagai "elemen" zodiak
+                            text  = zodiac.makna,
                             style = MaterialTheme.typography.labelSmall.copy(
                                 color      = MaterialTheme.colorScheme.primary,
                                 fontWeight = FontWeight.SemiBold,
@@ -247,41 +252,41 @@ fun FlowerLanguageItemCard(
 // DETAIL SCREEN
 // ═════════════════════════════════════════════════════════════════════════════
 @Composable
-fun FlowerLanguageDetailScreen(
+fun ZodiacDetailScreen(
     navController           : NavHostController,
     snackbarHost            : SnackbarHostState,
-    flowerLanguageViewModel : FlowerLanguageViewModel,
-    flowerId                : String,
+    zodiacViewModel : ZodiacViewModel,
+    zodiacId                : String,
 ) {
-    val uiState       by flowerLanguageViewModel.uiState.collectAsState()
+    val uiState       by zodiacViewModel.uiState.collectAsState()
     var isLoading     by remember { mutableStateOf(false) }
     var isConfirmDelete by remember { mutableStateOf(false) }
-    var flower        by remember { mutableStateOf<ResponseFlowerLanguageData?>(null) }
+    var zodiac        by remember { mutableStateOf<ResponseZodiacData?>(null) }
 
     LaunchedEffect(Unit) {
         isLoading = true
-        uiState.flower       = FlowerUIState.Loading
-        uiState.flowerAction = FlowerActionUIState.Loading
-        flowerLanguageViewModel.getFlowerById(flowerId)
+        uiState.zodiac       = ZodiacUIState.Loading
+        uiState.zodiacAction = ZodiacActionUIState.Loading
+        zodiacViewModel.getZodiacById(zodiacId)
     }
 
-    LaunchedEffect(uiState.flower) {
-        if (uiState.flower !is FlowerUIState.Loading) {
-            if (uiState.flower is FlowerUIState.Success)
-                flower = (uiState.flower as FlowerUIState.Success).data
+    LaunchedEffect(uiState.zodiac) {
+        if (uiState.zodiac !is ZodiacUIState.Loading) {
+            if (uiState.zodiac is ZodiacUIState.Success)
+                zodiac = (uiState.zodiac as ZodiacUIState.Success).data
             else RouteHelper.back(navController)
             isLoading = false
         }
     }
 
-    LaunchedEffect(uiState.flowerAction) {
-        when (val s = uiState.flowerAction) {
-            is FlowerActionUIState.Success -> {
+    LaunchedEffect(uiState.zodiacAction) {
+        when (val s = uiState.zodiacAction) {
+            is ZodiacActionUIState.Success -> {
                 SuspendHelper.showSnackBar(snackbarHost, SuspendHelper.SnackBarType.SUCCESS, s.message)
-                RouteHelper.to(navController, ConstHelper.RouteNames.FlowerLanguage.path, true)
+                RouteHelper.to(navController, ConstHelper.RouteNames.Zodiac.path, true)
                 isLoading = false
             }
-            is FlowerActionUIState.Error -> {
+            is ZodiacActionUIState.Error -> {
                 SuspendHelper.showSnackBar(snackbarHost, SuspendHelper.SnackBarType.ERROR, s.message)
                 isLoading = false
             }
@@ -289,7 +294,7 @@ fun FlowerLanguageDetailScreen(
         }
     }
 
-    if (isLoading || flower == null) { LoadingUI(); return }
+    if (isLoading || zodiac == null) { LoadingUI(); return }
 
     val menuItems = listOf(
         TopAppBarMenuItem(
@@ -298,7 +303,7 @@ fun FlowerLanguageDetailScreen(
             onClick = {
                 RouteHelper.to(
                     navController,
-                    ConstHelper.RouteNames.FlowerLanguageEdit.path.replace("{flowerId}", flower!!.id),
+                    ConstHelper.RouteNames.ZodiacEdit.path.replace("{zodiacId}", zodiac!!.id),
                 )
             },
         ),
@@ -317,20 +322,20 @@ fun FlowerLanguageDetailScreen(
     ) {
         TopAppBarComponent(
             navController   = navController,
-            title           = flower!!.namaUmum,
+            title           = zodiac!!.namaUmum,
             showBackButton  = true,
             customMenuItems = menuItems,
         )
         Box(modifier = Modifier.weight(1f)) {
-            FlowerLanguageDetailUI(flower = flower!!)
+            ZodiacDetailUI(zodiac = zodiac!!)
             BottomDialog(
                 type            = BottomDialogType.ERROR,
                 show            = isConfirmDelete,
                 onDismiss       = { isConfirmDelete = false },
                 title           = "Hapus Data",
-                message         = "Yakin ingin menghapus \"${flower!!.namaUmum}\"?",
+                message         = "Yakin ingin menghapus \"${zodiac!!.namaUmum}\"?",
                 confirmText     = "Ya, Hapus",
-                onConfirm       = { isLoading = true; flowerLanguageViewModel.deleteFlower(flowerId) },
+                onConfirm       = { isLoading = true; zodiacViewModel.deleteZodiac(zodiacId) },
                 cancelText      = "Batal",
                 destructiveAction = true,
             )
@@ -340,7 +345,7 @@ fun FlowerLanguageDetailScreen(
 }
 
 @Composable
-fun FlowerLanguageDetailUI(flower: ResponseFlowerLanguageData) {
+fun ZodiacDetailUI(zodiac: ResponseZodiacData) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -353,22 +358,22 @@ fun FlowerLanguageDetailUI(flower: ResponseFlowerLanguageData) {
                 .height(260.dp),
         ) {
             AsyncImage(
-                model              = getFlowerImageUrl(flower.id),
-                contentDescription = flower.namaUmum,
+                model              = getZodiacImageUrl(zodiac.id),
+                contentDescription = zodiac.namaUmum,
                 placeholder        = painterResource(R.drawable.img_placeholder),
                 error              = painterResource(R.drawable.img_placeholder),
                 contentScale       = ContentScale.Crop,
                 modifier           = Modifier.fillMaxSize(),
             )
-            // gradient overlay bawah
+            // gradient overlay
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(
                         Brush.verticalGradient(
-                            0f to Color.Transparent,
-                            0.55f to Color.Transparent,
-                            1f to Color(0xBB1C0011),
+                            0f   to Color.Transparent,
+                            0.5f to Color.Transparent,
+                            1f   to Color(0xBB0D0820),
                         )
                     ),
             )
@@ -379,16 +384,16 @@ fun FlowerLanguageDetailUI(flower: ResponseFlowerLanguageData) {
                     .padding(20.dp),
             ) {
                 Text(
-                    text  = flower.namaUmum,
+                    text  = zodiac.namaUmum,
                     style = MaterialTheme.typography.headlineSmall.copy(
                         color      = Color.White,
                         fontWeight = FontWeight.ExtraBold,
                     ),
                 )
                 Text(
-                    text  = flower.namaLatin,
+                    text  = zodiac.namaLatin,
                     style = MaterialTheme.typography.bodyMedium.copy(
-                        color     = Color.White.copy(alpha = 0.8f),
+                        color     = Color(0xFFFFD600).copy(alpha = 0.9f),
                         fontStyle = FontStyle.Italic,
                     ),
                 )
@@ -400,7 +405,7 @@ fun FlowerLanguageDetailUI(flower: ResponseFlowerLanguageData) {
             verticalArrangement = Arrangement.spacedBy(14.dp),
         ) {
 
-            // Makna — highlight card
+            // Makna / Elemen — highlight card
             Card(
                 modifier  = Modifier.fillMaxWidth(),
                 shape     = RoundedCornerShape(16.dp),
@@ -417,13 +422,13 @@ fun FlowerLanguageDetailUI(flower: ResponseFlowerLanguageData) {
                     Spacer(Modifier.width(12.dp))
                     Column {
                         Text(
-                            "Makna",
+                            "Elemen / Sifat",
                             style = MaterialTheme.typography.labelMedium.copy(
                                 color = MaterialTheme.colorScheme.primary,
                             ),
                         )
                         Text(
-                            flower.makna,
+                            zodiac.makna,
                             style = MaterialTheme.typography.titleMedium.copy(
                                 fontWeight = FontWeight.Bold,
                                 color      = MaterialTheme.colorScheme.onPrimaryContainer,
@@ -433,11 +438,11 @@ fun FlowerLanguageDetailUI(flower: ResponseFlowerLanguageData) {
                 }
             }
 
-            // Asal Budaya
-            DetailSectionCard(icon = "🌍", title = "Asal Budaya", content = flower.asalBudaya)
+            // Asal Budaya / Periode
+            ZodiacSectionCard(icon = "🗓️", title = "Periode / Asal", content = zodiac.asalBudaya)
 
             // Deskripsi
-            DetailSectionCard(icon = "📖", title = "Deskripsi", content = flower.deskripsi)
+            ZodiacSectionCard(icon = "📖", title = "Deskripsi", content = zodiac.deskripsi)
 
             Spacer(Modifier.height(16.dp))
         }
@@ -445,7 +450,7 @@ fun FlowerLanguageDetailUI(flower: ResponseFlowerLanguageData) {
 }
 
 @Composable
-private fun DetailSectionCard(icon: String, title: String, content: String) {
+private fun ZodiacSectionCard(icon: String, title: String, content: String) {
     Card(
         modifier  = Modifier.fillMaxWidth(),
         shape     = RoundedCornerShape(16.dp),
@@ -479,16 +484,16 @@ private fun DetailSectionCard(icon: String, title: String, content: String) {
 // ADD SCREEN
 // ═════════════════════════════════════════════════════════════════════════════
 @Composable
-fun FlowerLanguageAddScreen(
+fun ZodiacAddScreen(
     navController           : NavHostController,
     snackbarHost            : SnackbarHostState,
-    flowerLanguageViewModel : FlowerLanguageViewModel,
+    zodiacViewModel : ZodiacViewModel,
 ) {
-    val uiState by flowerLanguageViewModel.uiState.collectAsState()
+    val uiState by zodiacViewModel.uiState.collectAsState()
     var isLoading by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
-        uiState.flowerAction = FlowerActionUIState.Loading
+        uiState.zodiacAction = ZodiacActionUIState.Loading
     }
 
     fun onSave(
@@ -501,7 +506,7 @@ fun FlowerLanguageAddScreen(
         file       : Uri?,
     ) {
         isLoading = true
-        flowerLanguageViewModel.postFlower(
+        zodiacViewModel.postZodiac(
             namaUmum   = namaUmum.toRequestBodyText(),
             namaLatin  = namaLatin.toRequestBodyText(),
             makna      = makna.toRequestBodyText(),
@@ -511,14 +516,14 @@ fun FlowerLanguageAddScreen(
         )
     }
 
-    LaunchedEffect(uiState.flowerAction) {
-        when (val s = uiState.flowerAction) {
-            is FlowerActionUIState.Success -> {
+    LaunchedEffect(uiState.zodiacAction) {
+        when (val s = uiState.zodiacAction) {
+            is ZodiacActionUIState.Success -> {
                 SuspendHelper.showSnackBar(snackbarHost, SuspendHelper.SnackBarType.SUCCESS, "Berhasil ditambahkan!")
-                RouteHelper.to(navController, ConstHelper.RouteNames.FlowerLanguage.path, true)
+                RouteHelper.to(navController, ConstHelper.RouteNames.Zodiac.path, true)
                 isLoading = false
             }
-            is FlowerActionUIState.Error -> {
+            is ZodiacActionUIState.Error -> {
                 SuspendHelper.showSnackBar(snackbarHost, SuspendHelper.SnackBarType.ERROR, s.message)
                 isLoading = false
             }
@@ -533,9 +538,9 @@ fun FlowerLanguageAddScreen(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
     ) {
-        TopAppBarComponent(navController = navController, title = "Tambah Bahasa Bunga", showBackButton = true)
+        TopAppBarComponent(navController = navController, title = "Tambah Zodiak", showBackButton = true)
         Box(modifier = Modifier.weight(1f)) {
-            FlowerLanguageFormUI(initialData = null, requireImage = true, onSave = ::onSave)
+            ZodiacFormUI(initialData = null, requireImage = true, onSave = ::onSave)
         }
         BottomNavComponent(navController = navController)
     }
@@ -545,27 +550,27 @@ fun FlowerLanguageAddScreen(
 // EDIT SCREEN
 // ═════════════════════════════════════════════════════════════════════════════
 @Composable
-fun FlowerLanguageEditScreen(
+fun ZodiacEditScreen(
     navController           : NavHostController,
     snackbarHost            : SnackbarHostState,
-    flowerLanguageViewModel : FlowerLanguageViewModel,
-    flowerId                : String,
+    zodiacViewModel : ZodiacViewModel,
+    zodiacId                : String,
 ) {
-    val uiState   by flowerLanguageViewModel.uiState.collectAsState()
+    val uiState   by zodiacViewModel.uiState.collectAsState()
     var isLoading by remember { mutableStateOf(false) }
-    var flower    by remember { mutableStateOf<ResponseFlowerLanguageData?>(null) }
+    var zodiac    by remember { mutableStateOf<ResponseZodiacData?>(null) }
 
     LaunchedEffect(Unit) {
         isLoading = true
-        uiState.flower       = FlowerUIState.Loading
-        uiState.flowerAction = FlowerActionUIState.Loading
-        flowerLanguageViewModel.getFlowerById(flowerId)
+        uiState.zodiac       = ZodiacUIState.Loading
+        uiState.zodiacAction = ZodiacActionUIState.Loading
+        zodiacViewModel.getZodiacById(zodiacId)
     }
 
-    LaunchedEffect(uiState.flower) {
-        if (uiState.flower !is FlowerUIState.Loading) {
-            if (uiState.flower is FlowerUIState.Success)
-                flower = (uiState.flower as FlowerUIState.Success).data
+    LaunchedEffect(uiState.zodiac) {
+        if (uiState.zodiac !is ZodiacUIState.Loading) {
+            if (uiState.zodiac is ZodiacUIState.Success)
+                zodiac = (uiState.zodiac as ZodiacUIState.Success).data
             else RouteHelper.back(navController)
             isLoading = false
         }
@@ -582,8 +587,8 @@ fun FlowerLanguageEditScreen(
     ) {
         isLoading = true
         val filePart: MultipartBody.Part? = file?.let { uriToMultipart(context, it, "file") }
-        flowerLanguageViewModel.putFlower(
-            flowerId   = flowerId,
+        zodiacViewModel.putZodiac(
+            zodiacId   = zodiacId,
             namaUmum   = namaUmum.toRequestBodyText(),
             namaLatin  = namaLatin.toRequestBodyText(),
             makna      = makna.toRequestBodyText(),
@@ -593,19 +598,19 @@ fun FlowerLanguageEditScreen(
         )
     }
 
-    LaunchedEffect(uiState.flowerAction) {
-        when (val s = uiState.flowerAction) {
-            is FlowerActionUIState.Success -> {
+    LaunchedEffect(uiState.zodiacAction) {
+        when (val s = uiState.zodiacAction) {
+            is ZodiacActionUIState.Success -> {
                 SuspendHelper.showSnackBar(snackbarHost, SuspendHelper.SnackBarType.SUCCESS, s.message)
                 RouteHelper.to(
                     navController = navController,
-                    destination   = ConstHelper.RouteNames.FlowerLanguageDetail.path.replace("{flowerId}", flowerId),
-                    popUpTo       = ConstHelper.RouteNames.FlowerLanguageDetail.path.replace("{flowerId}", flowerId),
+                    destination   = ConstHelper.RouteNames.ZodiacDetail.path.replace("{zodiacId}", zodiacId),
+                    popUpTo       = ConstHelper.RouteNames.ZodiacDetail.path.replace("{zodiacId}", zodiacId),
                     removeBackStack = true,
                 )
                 isLoading = false
             }
-            is FlowerActionUIState.Error -> {
+            is ZodiacActionUIState.Error -> {
                 SuspendHelper.showSnackBar(snackbarHost, SuspendHelper.SnackBarType.ERROR, s.message)
                 isLoading = false
             }
@@ -613,16 +618,16 @@ fun FlowerLanguageEditScreen(
         }
     }
 
-    if (isLoading || flower == null) { LoadingUI(); return }
+    if (isLoading || zodiac == null) { LoadingUI(); return }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
     ) {
-        TopAppBarComponent(navController = navController, title = "Ubah Bahasa Bunga", showBackButton = true)
+        TopAppBarComponent(navController = navController, title = "Ubah Zodiak", showBackButton = true)
         Box(modifier = Modifier.weight(1f)) {
-            FlowerLanguageFormUI(initialData = flower, requireImage = false, onSave = ::onSave)
+            ZodiacFormUI(initialData = zodiac, requireImage = false, onSave = ::onSave)
         }
         BottomNavComponent(navController = navController)
     }
@@ -632,8 +637,8 @@ fun FlowerLanguageEditScreen(
 // SHARED FORM UI
 // ═════════════════════════════════════════════════════════════════════════════
 @Composable
-fun FlowerLanguageFormUI(
-    initialData  : ResponseFlowerLanguageData?,
+fun ZodiacFormUI(
+    initialData  : ResponseZodiacData?,
     requireImage : Boolean,
     onSave       : (Context, String, String, String, String, String, Uri?) -> Unit,
 ) {
@@ -679,7 +684,11 @@ fun FlowerLanguageFormUI(
                 modifier = Modifier
                     .size(160.dp)
                     .clip(RoundedCornerShape(20.dp))
-                    .background(MaterialTheme.colorScheme.primaryContainer)
+                    .background(
+                        Brush.linearGradient(
+                            colors = listOf(Color(0xFF1A0050), Color(0xFF0A1A4E))
+                        )
+                    )
                     .clickable {
                         imagePicker.launch(
                             PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
@@ -697,7 +706,7 @@ fun FlowerLanguageFormUI(
                         modifier           = Modifier.fillMaxSize(),
                     )
                     initialData != null -> AsyncImage(
-                        model              = getFlowerImageUrl(initialData.id),
+                        model              = getZodiacImageUrl(initialData.id),
                         contentDescription = "Gambar saat ini",
                         placeholder        = painterResource(R.drawable.img_placeholder),
                         error              = painterResource(R.drawable.img_placeholder),
@@ -709,13 +718,13 @@ fun FlowerLanguageFormUI(
                             Icons.Default.AddAPhoto,
                             contentDescription = null,
                             modifier           = Modifier.size(36.dp),
-                            tint               = MaterialTheme.colorScheme.onPrimaryContainer,
+                            tint               = Color.White.copy(alpha = 0.8f),
                         )
                         Spacer(Modifier.height(6.dp))
                         Text(
                             "Pilih Gambar",
                             style = MaterialTheme.typography.labelMedium,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer,
+                            color = Color.White.copy(alpha = 0.8f),
                         )
                     }
                 }
@@ -733,7 +742,8 @@ fun FlowerLanguageFormUI(
         OutlinedTextField(
             value         = dataNamaUmum,
             onValueChange = { dataNamaUmum = it },
-            label         = { Text("Nama Umum *") },
+            label         = { Text("Nama Zodiak *") },
+            placeholder   = { Text("Contoh: Aries") },
             colors        = fieldColors,
             modifier      = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
@@ -743,8 +753,8 @@ fun FlowerLanguageFormUI(
         OutlinedTextField(
             value         = dataNamaLatin,
             onValueChange = { dataNamaLatin = it },
-            label         = { Text("Nama Latin *") },
-            placeholder   = { Text("Contoh: Rosa damascena", fontStyle = FontStyle.Italic) },
+            label         = { Text("Simbol / Nama Latin *") },
+            placeholder   = { Text("Contoh: ♈ The Ram") },
             colors        = fieldColors,
             modifier      = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
@@ -754,8 +764,8 @@ fun FlowerLanguageFormUI(
         OutlinedTextField(
             value         = dataMakna,
             onValueChange = { dataMakna = it },
-            label         = { Text("Makna Bunga *") },
-            placeholder   = { Text("Contoh: Cinta & Gairah") },
+            label         = { Text("Elemen / Sifat *") },
+            placeholder   = { Text("Contoh: Api — Berani & Penuh Semangat") },
             colors        = fieldColors,
             modifier      = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
@@ -765,8 +775,8 @@ fun FlowerLanguageFormUI(
         OutlinedTextField(
             value         = dataAsalBudaya,
             onValueChange = { dataAsalBudaya = it },
-            label         = { Text("Asal Budaya *") },
-            placeholder   = { Text("Contoh: Jepang, Eropa Victoria") },
+            label         = { Text("Periode Tanggal *") },
+            placeholder   = { Text("Contoh: 21 Maret – 19 April") },
             colors        = fieldColors,
             modifier      = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
@@ -798,10 +808,10 @@ fun FlowerLanguageFormUI(
         FloatingActionButton(
             onClick = {
                 when {
-                    dataNamaUmum.isBlank()   -> errorMsg = "Nama umum tidak boleh kosong!"
-                    dataNamaLatin.isBlank()  -> errorMsg = "Nama latin tidak boleh kosong!"
-                    dataMakna.isBlank()      -> errorMsg = "Makna tidak boleh kosong!"
-                    dataAsalBudaya.isBlank() -> errorMsg = "Asal budaya tidak boleh kosong!"
+                    dataNamaUmum.isBlank()   -> errorMsg = "Nama zodiak tidak boleh kosong!"
+                    dataNamaLatin.isBlank()  -> errorMsg = "Simbol/nama latin tidak boleh kosong!"
+                    dataMakna.isBlank()      -> errorMsg = "Elemen/sifat tidak boleh kosong!"
+                    dataAsalBudaya.isBlank() -> errorMsg = "Periode tanggal tidak boleh kosong!"
                     dataDeskripsi.isBlank()  -> errorMsg = "Deskripsi tidak boleh kosong!"
                     requireImage && dataFile == null -> errorMsg = "Gambar tidak boleh kosong!"
                     else -> onSave(
@@ -835,8 +845,8 @@ fun FlowerLanguageFormUI(
 // ─────────────────────────────────────────────────────────────────────────────
 @Preview(showBackground = true)
 @Composable
-fun PreviewFlowerLanguageListUI() {
+fun PreviewZodiacListUI() {
     DelcomTheme {
-        FlowerLanguageListUI(flowers = emptyList(), onOpen = {})
+        ZodiacListUI(zodiacs = emptyList(), onOpen = {})
     }
 }

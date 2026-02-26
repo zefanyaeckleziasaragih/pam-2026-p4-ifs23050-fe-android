@@ -1,24 +1,24 @@
-package org.delcom.pam_p4_ifs23051.network.flower.data
+package org.delcom.pam_p4_ifs23050.network.zodiac.data
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ResponseFlowerLanguages(
-    val flowers: List<ResponseFlowerLanguageData>
+data class ResponseZodiacs(
+    val flowers: List<ResponseZodiacData>
 )
 
 @Serializable
-data class ResponseFlowerLanguage(
-    val flower: ResponseFlowerLanguageData
+data class ResponseZodiac(
+    val flower: ResponseZodiacData
 )
 
 @Serializable
-data class ResponseFlowerLanguageAdd(
+data class ResponseZodiacAdd(
     val flowerId: String
 )
 
 @Serializable
-data class ResponseFlowerLanguageData(
+data class ResponseZodiacData(
     val id: String,
     val namaUmum: String,
     val namaLatin: String,

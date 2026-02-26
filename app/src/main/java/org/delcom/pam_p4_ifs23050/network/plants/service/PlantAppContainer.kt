@@ -1,7 +1,7 @@
-package org.delcom.pam_p4_ifs23051.network.plants.service
+package org.delcom.pam_p4_ifs23050.network.plants.service
 
-import org.delcom.pam_p4_ifs23051.BuildConfig
-import org.delcom.pam_p4_ifs23051.helper.UnsafeOkHttpClient
+import org.delcom.pam_p4_ifs23050.BuildConfig
+import org.delcom.pam_p4_ifs23050.helper.UnsafeOkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

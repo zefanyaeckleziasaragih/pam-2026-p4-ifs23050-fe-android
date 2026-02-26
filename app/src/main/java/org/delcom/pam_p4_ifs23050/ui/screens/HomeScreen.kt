@@ -1,4 +1,4 @@
-package org.delcom.pam_p4_ifs23051.ui.screens
+package org.delcom.pam_p4_ifs23050.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -19,9 +19,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import org.delcom.pam_p4_ifs23051.ui.components.BottomNavComponent
-import org.delcom.pam_p4_ifs23051.ui.components.TopAppBarComponent
-import org.delcom.pam_p4_ifs23051.ui.theme.DelcomTheme
+import org.delcom.pam_p4_ifs23050.ui.components.BottomNavComponent
+import org.delcom.pam_p4_ifs23050.ui.components.TopAppBarComponent
+import org.delcom.pam_p4_ifs23050.ui.theme.DelcomTheme
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Screen
@@ -59,17 +59,21 @@ fun HomeUI() {
                 .clip(RoundedCornerShape(24.dp))
                 .background(
                     Brush.linearGradient(
-                        colors = listOf(Color(0xFFC2185B), Color(0xFF7B1FA2), Color(0xFFAD1457)),
+                        colors = listOf(
+                            Color(0xFF0D0820),
+                            Color(0xFF1A0050),
+                            Color(0xFF0A1A4E),
+                        ),
                     )
                 )
                 .padding(vertical = 32.dp, horizontal = 24.dp),
             contentAlignment = Alignment.Center,
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text("🌸", fontSize = 52.sp)
+                Text("✨", fontSize = 52.sp)
                 Spacer(Modifier.height(10.dp))
                 Text(
-                    text  = "Delcom Flowers",
+                    text  = "Delcom Zodiac",
                     style = MaterialTheme.typography.headlineMedium.copy(
                         color      = Color.White,
                         fontWeight = FontWeight.ExtraBold,
@@ -78,9 +82,9 @@ fun HomeUI() {
                 )
                 Spacer(Modifier.height(6.dp))
                 Text(
-                    text  = "Bahasa Bunga · Floriography · Hanakotoba",
+                    text  = "Rasi Bintang · Zodiak · Konstelasi",
                     style = MaterialTheme.typography.bodySmall.copy(
-                        color      = Color.White.copy(alpha = 0.85f),
+                        color      = Color(0xFFFFD600).copy(alpha = 0.9f),
                         fontStyle  = FontStyle.Italic,
                         letterSpacing = 0.8.sp,
                     ),
@@ -89,7 +93,7 @@ fun HomeUI() {
             }
         }
 
-        // ── Penjelasan Bahasa Bunga ──────────────────────────────────────────
+        // ── Penjelasan Zodiak ─────────────────────────────────────────────────
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape    = RoundedCornerShape(18.dp),
@@ -101,7 +105,7 @@ fun HomeUI() {
                     Text("📖", fontSize = 22.sp)
                     Spacer(Modifier.width(10.dp))
                     Text(
-                        text  = "Apa itu Bahasa Bunga?",
+                        text  = "Apa itu Zodiak?",
                         style = MaterialTheme.typography.titleMedium.copy(
                             color      = MaterialTheme.colorScheme.primary,
                             fontWeight = FontWeight.Bold,
@@ -110,7 +114,7 @@ fun HomeUI() {
                 }
                 Spacer(Modifier.height(10.dp))
                 Text(
-                    text  = "Bahasa Bunga (Floriography) adalah seni menyampaikan pesan melalui pilihan bunga. Setiap bunga menyimpan makna simbolis yang unik — dari cinta, kesetiaan, hingga perpisahan — yang telah digunakan lintas budaya selama berabad-abad.",
+                    text  = "Zodiak adalah 12 rasi bintang yang dilintasi matahari dalam setahun. Setiap zodiak memiliki sifat, elemen, dan makna unik yang dipercaya memengaruhi kepribadian seseorang berdasarkan tanggal lahir mereka.",
                     style = MaterialTheme.typography.bodyMedium.copy(
                         color = MaterialTheme.colorScheme.onSurface,
                         lineHeight = 22.sp,
@@ -119,53 +123,60 @@ fun HomeUI() {
             }
         }
 
-        // ── Bunga Populer ────────────────────────────────────────────────────
+        // ── 12 Zodiak ────────────────────────────────────────────────────────
         Text(
-            text  = "🌺 Bunga & Maknanya",
+            text  = "⭐ 12 Rasi Bintang Zodiak",
             style = MaterialTheme.typography.titleLarge.copy(
                 fontWeight = FontWeight.Bold,
                 color      = MaterialTheme.colorScheme.primary,
             ),
         )
 
-        val flowers = listOf(
-            FlowerCard("🌹", "Mawar Merah",    "Cinta mendalam & gairah",         Color(0xFFFFD6E7)),
-            FlowerCard("🌷", "Tulip Pink",     "Kasih sayang & perhatian",        Color(0xFFFFE4EF)),
-            FlowerCard("🌸", "Sakura",         "Kecantikan singkat & keanggunan", Color(0xFFFCE4EC)),
-            FlowerCard("💜", "Lavender",       "Kekaguman & ketenangan",          Color(0xFFF3E5F5)),
-            FlowerCard("🌼", "Chamomile",      "Kesabaran & semangat hidup",      Color(0xFFFFF9C4)),
-            FlowerCard("🌻", "Bunga Matahari", "Loyalitas & kebahagiaan",         Color(0xFFFFF3E0)),
+        val zodiacs = listOf(
+            ZodiacCard("♈", "Aries",       "21 Mar – 19 Apr",  Color(0xFFEDE7F6)),
+            ZodiacCard("♉", "Taurus",      "20 Apr – 20 Mei",  Color(0xFFE8EAF6)),
+            ZodiacCard("♊", "Gemini",      "21 Mei – 20 Jun",  Color(0xFFF3E5F5)),
+            ZodiacCard("♋", "Cancer",      "21 Jun – 22 Jul",  Color(0xFFE8EAF6)),
+            ZodiacCard("♌", "Leo",         "23 Jul – 22 Agt",  Color(0xFFFFF9C4)),
+            ZodiacCard("♍", "Virgo",       "23 Agt – 22 Sep",  Color(0xFFEDE7F6)),
+            ZodiacCard("♎", "Libra",       "23 Sep – 22 Okt",  Color(0xFFE8EAF6)),
+            ZodiacCard("♏", "Scorpio",     "23 Okt – 21 Nov",  Color(0xFFF3E5F5)),
+            ZodiacCard("♐", "Sagitarius",  "22 Nov – 21 Des",  Color(0xFFFFF9C4)),
+            ZodiacCard("♑", "Capricorn",   "22 Des – 19 Jan",  Color(0xFFEDE7F6)),
+            ZodiacCard("♒", "Aquarius",    "20 Jan – 18 Feb",  Color(0xFFE8EAF6)),
+            ZodiacCard("♓", "Pisces",      "19 Feb – 20 Mar",  Color(0xFFF3E5F5)),
         )
 
-        flowers.chunked(2).forEach { pair ->
+        zodiacs.chunked(2).forEach { pair ->
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
             ) {
-                pair.forEach { f ->
-                    FlowerMiniCard(f, modifier = Modifier.weight(1f))
+                pair.forEach { z ->
+                    ZodiacMiniCard(z, modifier = Modifier.weight(1f))
                 }
                 if (pair.size == 1) Spacer(Modifier.weight(1f))
             }
         }
 
-        // ── Budaya Bahasa Bunga ──────────────────────────────────────────────
+        // ── Elemen Zodiak ─────────────────────────────────────────────────────
         Text(
-            text  = "🌍 Tradisi di Berbagai Budaya",
+            text  = "🔥 Empat Elemen Zodiak",
             style = MaterialTheme.typography.titleLarge.copy(
                 fontWeight = FontWeight.Bold,
                 color      = MaterialTheme.colorScheme.primary,
             ),
         )
 
-        val cultures = listOf(
-            Triple("🇯🇵", "Jepang (Hanakotoba)",   "Sakura = kehidupan singkat; Iris = pesan kesetiaan"),
-            Triple("🏰", "Eropa Victoria",          "Mawar merah = cinta rahasia; Pansies = pikiran & memori"),
-            Triple("🕌", "Persia & Ottoman",         "Tulip = deklarasi cinta sempurna; Hyacinth = doa"),
+        val elements = listOf(
+            Triple("🔥", "Api (Aries, Leo, Sagitarius)",    "Bersemangat, penuh gairah, dan berani"),
+            Triple("🌍", "Bumi (Taurus, Virgo, Capricorn)", "Stabil, praktis, dan dapat diandalkan"),
+            Triple("💨", "Udara (Gemini, Libra, Aquarius)", "Intelektual, komunikatif, dan bebas"),
+            Triple("💧", "Air (Cancer, Scorpio, Pisces)",   "Intuitif, emosional, dan penuh empati"),
         )
 
-        cultures.forEach { (flag, name, desc) ->
-            CultureCard(flag = flag, name = name, desc = desc)
+        elements.forEach { (emoji, name, desc) ->
+            ElementCard(emoji = emoji, name = name, desc = desc)
         }
 
         // ── Kutipan ──────────────────────────────────────────────────────────
@@ -176,8 +187,8 @@ fun HomeUI() {
                 .background(
                     Brush.horizontalGradient(
                         colors = listOf(
-                            MaterialTheme.colorScheme.primaryContainer,
-                            MaterialTheme.colorScheme.secondaryContainer,
+                            Color(0xFF1A0050),
+                            Color(0xFF0A1A4E),
                         )
                     )
                 )
@@ -185,23 +196,22 @@ fun HomeUI() {
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
-                    text  = "❝",
+                    text  = "✨",
                     fontSize = 36.sp,
-                    color = MaterialTheme.colorScheme.primary,
                 )
                 Text(
-                    text  = "Bunga adalah kata-kata yang bahkan anak-anak pun dapat membacanya.",
+                    text  = "Bintang-bintang di langit bukan sekadar cahaya — mereka adalah cerita yang menunggu untuk dibaca.",
                     style = MaterialTheme.typography.bodyLarge.copy(
                         fontStyle = FontStyle.Italic,
-                        color     = MaterialTheme.colorScheme.onPrimaryContainer,
+                        color     = Color.White,
                         textAlign = TextAlign.Center,
                     ),
                 )
                 Spacer(Modifier.height(8.dp))
                 Text(
-                    text  = "— Arthur Cleveland Coxe",
+                    text  = "— Delcom Zodiac",
                     style = MaterialTheme.typography.labelMedium.copy(
-                        color      = MaterialTheme.colorScheme.primary,
+                        color      = Color(0xFFFFD600),
                         fontWeight = FontWeight.SemiBold,
                     ),
                 )
@@ -215,31 +225,31 @@ fun HomeUI() {
 // ─────────────────────────────────────────────────────────────────────────────
 // Helpers
 // ─────────────────────────────────────────────────────────────────────────────
-data class FlowerCard(val emoji: String, val name: String, val meaning: String, val bg: Color)
+data class ZodiacCard(val symbol: String, val name: String, val dates: String, val bg: Color)
 
 @Composable
-fun FlowerMiniCard(f: FlowerCard, modifier: Modifier = Modifier) {
+fun ZodiacMiniCard(z: ZodiacCard, modifier: Modifier = Modifier) {
     Card(
         modifier  = modifier,
         shape     = RoundedCornerShape(16.dp),
-        colors    = CardDefaults.cardColors(containerColor = f.bg),
+        colors    = CardDefaults.cardColors(containerColor = z.bg),
         elevation = CardDefaults.cardElevation(2.dp),
     ) {
         Column(
             modifier             = Modifier.padding(14.dp),
             horizontalAlignment  = Alignment.CenterHorizontally,
         ) {
-            Text(f.emoji, fontSize = 36.sp)
+            Text(z.symbol, fontSize = 32.sp)
             Spacer(Modifier.height(6.dp))
             Text(
-                text  = f.name,
+                text  = z.name,
                 style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold),
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onSurface,
             )
             Spacer(Modifier.height(4.dp))
             Text(
-                text  = f.meaning,
+                text  = z.dates,
                 style = MaterialTheme.typography.labelSmall.copy(
                     fontStyle = FontStyle.Italic,
                     color     = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -251,7 +261,7 @@ fun FlowerMiniCard(f: FlowerCard, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun CultureCard(flag: String, name: String, desc: String) {
+fun ElementCard(emoji: String, name: String, desc: String) {
     Card(
         modifier  = Modifier.fillMaxWidth(),
         shape     = RoundedCornerShape(14.dp),
@@ -262,7 +272,7 @@ fun CultureCard(flag: String, name: String, desc: String) {
             modifier = Modifier.padding(14.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(flag, fontSize = 28.sp)
+            Text(emoji, fontSize = 28.sp)
             Spacer(Modifier.width(14.dp))
             Column {
                 Text(

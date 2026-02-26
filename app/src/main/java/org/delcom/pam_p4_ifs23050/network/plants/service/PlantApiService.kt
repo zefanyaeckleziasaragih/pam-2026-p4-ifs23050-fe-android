@@ -1,13 +1,13 @@
-package org.delcom.pam_p4_ifs23051.network.plants.service
+package org.delcom.pam_p4_ifs23050.network.plants.service
 
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
-import org.delcom.pam_p4_ifs23051.network.data.ResponseMessage
-import org.delcom.pam_p4_ifs23051.network.plants.data.ResponsePlant
-import org.delcom.pam_p4_ifs23051.network.plants.data.ResponsePlantAdd
-import org.delcom.pam_p4_ifs23051.network.plants.data.ResponsePlants
-import org.delcom.pam_p4_ifs23051.network.plants.data.ResponseProfile
+import org.delcom.pam_p4_ifs23050.network.data.ResponseMessage
+import org.delcom.pam_p4_ifs23050.network.plants.data.ResponsePlant
+import org.delcom.pam_p4_ifs23050.network.plants.data.ResponsePlantAdd
+import org.delcom.pam_p4_ifs23050.network.plants.data.ResponsePlants
+import org.delcom.pam_p4_ifs23050.network.plants.data.ResponseProfile
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Multipart

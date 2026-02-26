@@ -1,8 +1,8 @@
-package org.delcom.pam_p4_ifs23051.helper
+package org.delcom.pam_p4_ifs23050.helper
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.delcom.pam_p4_ifs23051.BuildConfig
+import org.delcom.pam_p4_ifs23050.BuildConfig
 import java.security.SecureRandom
 import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit

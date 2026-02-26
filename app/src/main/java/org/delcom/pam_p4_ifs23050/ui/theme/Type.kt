@@ -1,4 +1,4 @@
-package org.delcom.pam_p4_ifs23051.ui.theme
+package org.delcom.pam_p4_ifs23050.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

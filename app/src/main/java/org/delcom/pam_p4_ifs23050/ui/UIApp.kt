@@ -1,4 +1,4 @@
-package org.delcom.pam_p4_ifs23051.ui
+package org.delcom.pam_p4_ifs23050.ui
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
@@ -15,19 +15,19 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import org.delcom.pam_p4_ifs23051.helper.ConstHelper
-import org.delcom.pam_p4_ifs23051.ui.components.CustomSnackbar
-import org.delcom.pam_p4_ifs23051.ui.screens.*
-import org.delcom.pam_p4_ifs23051.ui.theme.PetalCream
-import org.delcom.pam_p4_ifs23051.ui.viewmodels.FlowerLanguageViewModel
-import org.delcom.pam_p4_ifs23051.ui.viewmodels.PlantViewModel
+import org.delcom.pam_p4_ifs23050.helper.ConstHelper
+import org.delcom.pam_p4_ifs23050.ui.components.CustomSnackbar
+import org.delcom.pam_p4_ifs23050.ui.screens.*
+import org.delcom.pam_p4_ifs23050.ui.theme.StarlightWhite
+import org.delcom.pam_p4_ifs23050.ui.viewmodels.ZodiacViewModel
+import org.delcom.pam_p4_ifs23050.ui.viewmodels.PlantViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun UIApp(
-    navController           : NavHostController = rememberNavController(),
-    plantViewModel          : PlantViewModel,
-    flowerLanguageViewModel : FlowerLanguageViewModel,
+    navController   : NavHostController = rememberNavController(),
+    plantViewModel  : PlantViewModel,
+    zodiacViewModel : ZodiacViewModel,
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -46,7 +46,7 @@ fun UIApp(
             startDestination = ConstHelper.RouteNames.Home.path,
             modifier         = Modifier
                 .fillMaxSize()
-                .background(PetalCream),
+                .background(StarlightWhite),
         ) {
 
             // ── Home ──────────────────────────────────────────────────────────
@@ -93,41 +93,41 @@ fun UIApp(
                 )
             }
 
-            // ── Bahasa Bunga ──────────────────────────────────────────────────
-            composable(ConstHelper.RouteNames.FlowerLanguage.path) {
-                FlowerLanguageScreen(
+            // ── Zodiac (Rasi Bintang) ─────────────────────────────────────────
+            composable(ConstHelper.RouteNames.Zodiac.path) {
+                ZodiacScreen(
                     navController           = navController,
                     snackbarHost            = snackbarHostState,
-                    flowerLanguageViewModel = flowerLanguageViewModel,
+                    zodiacViewModel = zodiacViewModel,
                 )
             }
-            composable(ConstHelper.RouteNames.FlowerLanguageAdd.path) {
-                FlowerLanguageAddScreen(
+            composable(ConstHelper.RouteNames.ZodiacAdd.path) {
+                ZodiacAddScreen(
                     navController           = navController,
                     snackbarHost            = snackbarHostState,
-                    flowerLanguageViewModel = flowerLanguageViewModel,
-                )
-            }
-            composable(
-                route     = ConstHelper.RouteNames.FlowerLanguageDetail.path,
-                arguments = listOf(navArgument("flowerId") { type = NavType.StringType }),
-            ) { back ->
-                FlowerLanguageDetailScreen(
-                    navController           = navController,
-                    snackbarHost            = snackbarHostState,
-                    flowerLanguageViewModel = flowerLanguageViewModel,
-                    flowerId                = back.arguments?.getString("flowerId") ?: "",
+                    zodiacViewModel = zodiacViewModel,
                 )
             }
             composable(
-                route     = ConstHelper.RouteNames.FlowerLanguageEdit.path,
-                arguments = listOf(navArgument("flowerId") { type = NavType.StringType }),
+                route     = ConstHelper.RouteNames.ZodiacDetail.path,
+                arguments = listOf(navArgument("zodiacId") { type = NavType.StringType }),
             ) { back ->
-                FlowerLanguageEditScreen(
+                ZodiacDetailScreen(
                     navController           = navController,
                     snackbarHost            = snackbarHostState,
-                    flowerLanguageViewModel = flowerLanguageViewModel,
-                    flowerId                = back.arguments?.getString("flowerId") ?: "",
+                    zodiacViewModel = zodiacViewModel,
+                    zodiacId                = back.arguments?.getString("zodiacId") ?: "",
+                )
+            }
+            composable(
+                route     = ConstHelper.RouteNames.ZodiacEdit.path,
+                arguments = listOf(navArgument("zodiacId") { type = NavType.StringType }),
+            ) { back ->
+                ZodiacEditScreen(
+                    navController           = navController,
+                    snackbarHost            = snackbarHostState,
+                    zodiacViewModel = zodiacViewModel,
+                    zodiacId                = back.arguments?.getString("zodiacId") ?: "",
                 )
             }
         }

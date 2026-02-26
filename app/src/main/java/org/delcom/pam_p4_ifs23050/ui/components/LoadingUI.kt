@@ -1,4 +1,4 @@
-package org.delcom.pam_p4_ifs23051.ui.components
+package org.delcom.pam_p4_ifs23050.ui.components
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.StartOffset
@@ -23,7 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import org.delcom.pam_p4_ifs23051.R
+import org.delcom.pam_p4_ifs23050.R
 
 @Composable
 fun RippleLoading(
