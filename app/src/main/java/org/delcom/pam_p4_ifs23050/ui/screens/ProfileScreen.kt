@@ -1,5 +1,6 @@
 package org.delcom.pam_p4_ifs23050.ui.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -19,16 +20,10 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -36,68 +31,40 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import coil.compose.AsyncImage
 import org.delcom.pam_p4_ifs23050.R
-import org.delcom.pam_p4_ifs23050.helper.RouteHelper
-import org.delcom.pam_p4_ifs23050.helper.ToolsHelper
 import org.delcom.pam_p4_ifs23050.network.plants.data.ResponseProfile
 import org.delcom.pam_p4_ifs23050.ui.components.BottomNavComponent
-import org.delcom.pam_p4_ifs23050.ui.components.LoadingUI
 import org.delcom.pam_p4_ifs23050.ui.components.TopAppBarComponent
 import org.delcom.pam_p4_ifs23050.ui.theme.DelcomTheme
 import org.delcom.pam_p4_ifs23050.ui.viewmodels.PlantViewModel
-import org.delcom.pam_p4_ifs23050.ui.viewmodels.ProfileUIState
+
+// Data profil hardcoded
+private val zefanyaProfile = ResponseProfile(
+    nama     = "Zefanya Ecklezia Saragih",
+    username = "zefanya.ecklesia",
+    tentang  = "Saya adalah seorang developer yang memiliki minat besar pada web dan mobile development serta desain UI/UX. Saya antusias mempelajari teknologi baru dan berfokus pada pengembangan aplikasi yang tidak hanya fungsional, tetapi juga memberikan pengalaman pengguna yang baik.",
+)
 
 @Composable
 fun ProfileScreen(
-    navController: NavHostController,
-    plantViewModel: PlantViewModel
+    navController : NavHostController,
+    plantViewModel: PlantViewModel  // tetap diterima agar signature tidak berubah
 ) {
-    val uiStatePlant by plantViewModel.uiState.collectAsState()
-
-    var isLoading by remember { mutableStateOf(false) }
-    var profile by remember { mutableStateOf<ResponseProfile?>(null) }
-
-    LaunchedEffect(Unit) {
-        isLoading = true
-        plantViewModel.getProfile()
-    }
-
-    LaunchedEffect(uiStatePlant.profile) {
-        if (uiStatePlant.profile !is ProfileUIState.Loading) {
-            isLoading = false
-            if (uiStatePlant.profile is ProfileUIState.Success) {
-                profile = (uiStatePlant.profile as ProfileUIState.Success).data
-            } else {
-                RouteHelper.back(navController)
-            }
-        }
-    }
-
-    if (isLoading || profile == null) {
-        LoadingUI()
-        return
-    }
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.background)
     ) {
         TopAppBarComponent(navController = navController, title = "Profil", false)
-        Box(
-            modifier = Modifier.weight(1f)
-        ) {
-            ProfileUI(profile = profile!!)
+        Box(modifier = Modifier.weight(1f)) {
+            ProfileUI(profile = zefanyaProfile)
         }
         BottomNavComponent(navController = navController)
     }
 }
 
 @Composable
-fun ProfileUI(
-    profile: ResponseProfile
-) {
+fun ProfileUI(profile: ResponseProfile) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -106,20 +73,19 @@ fun ProfileUI(
 
         // Header Profile
         Box(
-            modifier = Modifier
+            modifier         = Modifier
                 .fillMaxWidth()
                 .padding(top = 32.dp, bottom = 16.dp),
             contentAlignment = Alignment.Center
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
-                // Foto Profil
-                AsyncImage(
-                    model = ToolsHelper.getProfilePhotoUrl(),
+                // Foto Profil — dari app/src/main/res/drawable/profile.png
+                Image(
+                    painter            = painterResource(R.drawable.profile),
                     contentDescription = "Foto Profil",
-                    placeholder = painterResource(R.drawable.img_placeholder),
-                    error = painterResource(R.drawable.img_placeholder),
-                    modifier = Modifier
+                    contentScale       = ContentScale.Crop,
+                    modifier           = Modifier
                         .size(110.dp)
                         .clip(CircleShape)
                         .border(3.dp, MaterialTheme.colorScheme.primary, CircleShape)
@@ -128,43 +94,43 @@ fun ProfileUI(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
-                    text = profile.nama,
-                    fontSize = 22.sp,
+                    text       = profile.nama,
+                    fontSize   = 22.sp,
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onBackground
+                    color      = MaterialTheme.colorScheme.onBackground
                 )
 
                 Text(
-                    text = profile.username,
+                    text     = profile.username,
                     fontSize = 16.sp,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color    = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         }
 
         // Bio Section
         Card(
-            modifier = Modifier
+            modifier  = Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),
-            shape = RoundedCornerShape(16.dp),
+            shape     = RoundedCornerShape(16.dp),
             elevation = CardDefaults.cardElevation(4.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+            colors    = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
                     "Tentang Saya",
-                    fontSize = 18.sp,
+                    fontSize   = 18.sp,
                     fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth(),
-                    color = MaterialTheme.colorScheme.primary
+                    textAlign  = TextAlign.Center,
+                    modifier   = Modifier.fillMaxWidth(),
+                    color      = MaterialTheme.colorScheme.primary
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     profile.tentang,
                     fontSize = 15.sp,
-                    color = MaterialTheme.colorScheme.onSurface
+                    color    = MaterialTheme.colorScheme.onSurface
                 )
             }
         }
@@ -173,16 +139,10 @@ fun ProfileUI(
     }
 }
 
-@Preview(showBackground = true, name = "Light Mode")
+@Preview(showBackground = true)
 @Composable
 fun PreviewProfileUI() {
     DelcomTheme {
-        ProfileUI(
-            profile = ResponseProfile(
-                nama = "Zefanya Ecklezia Saragih",
-                username = "ifs23050",
-                tentang = "Saya adalah seorang developer yang tertarik pada mobile development, backend API, dan berbagai teknologi pengembangan aplikasi."
-            )
-        )
+        ProfileUI(profile = zefanyaProfile)
     }
 }

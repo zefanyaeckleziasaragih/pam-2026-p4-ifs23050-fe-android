@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    img_logo.xml — Delcom Zodiac logo
+    Desain: lingkaran orbit dengan simbol bintang 6 titik di tengah,
+    12 titik konstelasi mengelilingi (representasi 12 zodiak),
+    dan glow ring luar. Warna tema cosmic purple & star gold.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Background circle - deep cosmic -->
+    <path
+        android:fillColor="#1A0050"
+        android:pathData="M54,54 m-54,0 a54,54 0 1,0 108,0 a54,54 0 1,0 -108,0" />
+
+    <!-- Outer ring -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFD600"
+        android:strokeWidth="1.2"
+        android:pathData="M54,54 m-44,0 a44,44 0 1,0 88,0 a44,44 0 1,0 -88,0" />
+
+    <!-- Inner ring -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#7B1FA2"
+        android:strokeWidth="0.8"
+        android:pathData="M54,54 m-34,0 a34,34 0 1,0 68,0 a34,34 0 1,0 -68,0" />
+
+    <!-- 12 zodiac dots on outer ring (evenly spaced at 30° each) -->
+    <!-- 0°   --> <path android:fillColor="#FFD600" android:pathData="M54,10 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0" />
+    <!-- 30°  --> <path android:fillColor="#FFD600" android:pathData="M76,17 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0" />
+    <!-- 60°  --> <path android:fillColor="#FFD600" android:pathData="M91,32 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0" />
+    <!-- 90°  --> <path android:fillColor="#FFD600" android:pathData="M98,54 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0" />
+    <!-- 120° --> <path android:fillColor="#FFD600" android:pathData="M91,76 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0" />
+    <!-- 150° --> <path android:fillColor="#FFD600" android:pathData="M76,91 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0" />
+    <!-- 180° --> <path android:fillColor="#CE93D8" android:pathData="M54,98 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0" />
+    <!-- 210° --> <path android:fillColor="#CE93D8" android:pathData="M32,91 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0" />
+    <!-- 240° --> <path android:fillColor="#CE93D8" android:pathData="M17,76 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0" />
+    <!-- 270° --> <path android:fillColor="#CE93D8" android:pathData="M10,54 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0" />
+    <!-- 300° --> <path android:fillColor="#CE93D8" android:pathData="M17,32 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0" />
+    <!-- 330° --> <path android:fillColor="#CE93D8" android:pathData="M32,17 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0" />
+
+    <!-- 6-point star (bintang 6 sudut) di tengah - Star of Ishtar / zodiac symbol -->
+    <!-- Triangle atas -->
+    <path
+        android:fillColor="#FFD600"
+        android:pathData="M54,30 L62,48 L46,48 Z" />
+    <!-- Triangle bawah -->
+    <path
+        android:fillColor="#CE93D8"
+        android:pathData="M54,78 L46,60 L62,60 Z" />
+    <!-- Overlap center diamond untuk blending effect -->
+    <path
+        android:fillColor="#9C27B0"
+        android:pathData="M46,48 L54,42 L62,48 L54,54 Z" />
+    <path
+        android:fillColor="#9C27B0"
+        android:pathData="M46,60 L54,54 L62,60 L54,66 Z" />
+
+    <!-- Center dot - bright star -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,54 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0" />
+
+    <!-- Small sparkle dots around center -->
+    <path android:fillColor="#FFD600" android:pathData="M44,44 m-1.5,0 a1.5,1.5 0 1,0 3,0 a1.5,1.5 0 1,0 -3,0" />
+    <path android:fillColor="#FFD600" android:pathData="M64,44 m-1.5,0 a1.5,1.5 0 1,0 3,0 a1.5,1.5 0 1,0 -3,0" />
+    <path android:fillColor="#FFD600" android:pathData="M44,64 m-1.5,0 a1.5,1.5 0 1,0 3,0 a1.5,1.5 0 1,0 -3,0" />
+    <path android:fillColor="#FFD600" android:pathData="M64,64 m-1.5,0 a1.5,1.5 0 1,0 3,0 a1.5,1.5 0 1,0 -3,0" />
+
+</vector>
